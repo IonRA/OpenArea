@@ -19,7 +19,7 @@ int main(int argc, char ** argv)
 		if (window == NULL)
 			throw "The window cannot be open";
 		screenSurface = SDL_GetWindowSurface(window);
-		SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0x00, 0x00, 0x00));
+		SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0x00, 0xFF, 0x00));
 		SDL_UpdateWindowSurface(window);
 		SDL_Delay(3000);
 		SDL_DestroyWindow(window);
