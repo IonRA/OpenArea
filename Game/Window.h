@@ -13,4 +13,5 @@ public:
 	SDL_Window* getWin() { return window; }
 	SDL_Surface* getSurf() { return screenSurface; }
 	Window& color(Uint8, Uint8, Uint8);
+	void loadImg(const char *);
 };

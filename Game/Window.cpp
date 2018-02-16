@@ -1,6 +1,7 @@
 #include <SDL\SDL_video.h>
 #include <SDL\SDL_timer.h>
 #include "Window.h"
+#include <iostream>
 
 Window::Window(int width, int height)
 {
@@ -17,6 +18,15 @@ Window& Window::color(Uint8 R, Uint8 G, Uint8 B)
 {
 	SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, R, G, B));
 	SDL_UpdateWindowSurface(window);
-	SDL_Delay(3000);
 	return *this;
+}
+
+void Window::loadImg(const char * s)
+{
+	SDL_Surface* imgSurface = SDL_LoadBMP(s);
+	if (imgSurface == NULL)
+		throw "Image cannot load";
+	SDL_BlitSurface(imgSurface, NULL, screenSurface, NULL);
+	SDL_UpdateWindowSurface(window);
+	SDL_FreeSurface(imgSurface);
 }

@@ -10,7 +10,20 @@ int main(int argc, char ** argv)
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 			throw SDL_GetError();
 		Window w;
-		w.color(0x0, 0xFF, 0x0);
+		bool quit = false;
+		SDL_Event e;
+		while (!quit)
+		{
+			while (SDL_PollEvent(&e) != 0)
+			{
+				if (e.type == SDL_QUIT)
+				{
+					quit = true;
+				}
+			}
+			w.loadImg("Resources/wi.bmp");
+		}
+		
 	}
 	catch (std::string s)
 	{
