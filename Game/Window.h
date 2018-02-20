@@ -4,8 +4,10 @@ class Window
 {
 	SDL_Window* window;
 	SDL_Surface* screenSurface;
+	int width;
+	int height;
 public:
-	Window(int width = 640, int height = 480);
+	Window(int w = 640, int h = 480);
 	~Window()
 	{
 		SDL_DestroyWindow(window);
@@ -13,5 +15,5 @@ public:
 	SDL_Window* getWin() { return window; }
 	SDL_Surface* getSurf() { return screenSurface; }
 	Window& color(Uint8, Uint8, Uint8);
-	void loadImg(const char *);
+	void loadImg(std::string);
 };

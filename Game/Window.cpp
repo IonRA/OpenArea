@@ -1,9 +1,12 @@
 #include <SDL\SDL_video.h>
 #include <SDL\SDL_timer.h>
-#include "Window.h"
+#include <SDL\SDL_image.h>
+#include <string>
 #include <iostream>
+#include "Window.h"
 
-Window::Window(int width, int height)
+
+Window::Window(int w, int h): width(w), height(h)
 {
 	window = SDL_CreateWindow("Window", 10, 34, width, height, SDL_WINDOW_SHOWN);
 	if (window == NULL)
@@ -21,12 +24,21 @@ Window& Window::color(Uint8 R, Uint8 G, Uint8 B)
 	return *this;
 }
 
-void Window::loadImg(const char * s)
+void Window::loadImg(std::string s)
 {
-	SDL_Surface* imgSurface = SDL_LoadBMP(s);
+	SDL_Surface * imgSurface = IMG_Load(s.c_str());
 	if (imgSurface == NULL)
 		throw "Image cannot load";
-	SDL_BlitSurface(imgSurface, NULL, screenSurface, NULL);
-	SDL_UpdateWindowSurface(window);
+	SDL_Surface* optimizedSurface = SDL_ConvertSurface(imgSurface, screenSurface->format, NULL);
 	SDL_FreeSurface(imgSurface);
+	if (optimizedSurface == NULL)
+		throw "Image cannot load";
+	SDL_Rect stretchRect;
+	stretchRect.x = 0;
+	stretchRect.y = 0;
+	stretchRect.w = width;
+	stretchRect.h = height;
+	SDL_BlitScaled(optimizedSurface, NULL, screenSurface, &stretchRect);
+	SDL_UpdateWindowSurface(window);
+	SDL_FreeSurface(optimizedSurface);
 }
