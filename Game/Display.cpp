@@ -16,7 +16,7 @@ Display::Display(int width, int height, std::string dname): quit(false)
 	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetSwapInterval(1);
-	window = SDL_CreateWindow(dname.c_str(), 10, 34, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN); 
+	window = SDL_CreateWindow(dname.c_str(), 10, 34, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE); 
 	if (window == NULL)
 	{
 		SDL_DestroyWindow(window);

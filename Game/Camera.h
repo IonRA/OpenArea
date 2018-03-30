@@ -8,6 +8,8 @@ class Camera
 	glm::vec3 pos;
 	glm::vec3 forward;
 	glm::vec3 up;
+	float pitch = 0.0f;
+	float yaw = -90.0f;
 
 public:
 	Camera(const glm::vec3& pos, float fov, float aspect, float zNear, float zFar)
@@ -18,9 +20,34 @@ public:
 		this->projection = glm::perspective(fov, aspect, zNear, zFar);
 	}
 
-	void rotate(glm::mat4 r)
+	void chPerspective(float fov, float aspect, float zNear, float zFar)
 	{
-		forward = (glm::mat3)r * forward;
+		this->projection = glm::perspective(fov, aspect, zNear, zFar);
+	}
+
+	void rotate(float xoffset, float yoffset)
+	{
+		yaw += xoffset;
+		pitch += yoffset;
+		if (pitch > 89.0f)
+			pitch = 89.0f;
+		if (pitch < -89.0f)
+			pitch = -89.0f;
+		glm::vec3 front;
+		front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+		front.y = sin(glm::radians(pitch));
+		front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+		forward = glm::normalize(front);
+	}
+
+	glm::vec3 inline getPos() const
+	{
+		return  pos;
+	}
+
+	glm::vec3 inline getForward() const
+	{
+		return  forward;
 	}
 
 	void moveForward()
@@ -30,17 +57,17 @@ public:
 
 	void moveBack()
 	{
-		this->pos -= 0.05f * forward;
+		this->pos -= 0.2f * forward;
 	}
 
 	void moveLeft()
 	{
-		this->pos -= glm::normalize(glm::cross(forward, up)) * 0.05f;
+		this->pos -= glm::normalize(glm::cross(forward, up)) * 0.2f;
 	}
 
 	void moveRight()
 	{
-		this->pos += glm::normalize(glm::cross(forward, up)) * 0.05f;
+		this->pos += glm::normalize(glm::cross(forward, up)) * 0.2f;
 	}
 
 	inline glm::mat4 GetViewProjection() const

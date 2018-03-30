@@ -28,6 +28,5 @@ public:
 	void bind();
 	void drawPolygon(std::vector<Vertex>);
 	bool inTriangle(glm::vec3, glm::mat3);
-	void actualize();
 };
 

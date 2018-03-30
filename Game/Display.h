@@ -16,4 +16,9 @@ public:
 	bool isClosed();
 	SDL_Window * getWindow() { return window; }
 	void setState(bool);
+	void inline clear()
+	{
+		glClearColor(0.0, 0.0, 0.0, 1.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
 };
