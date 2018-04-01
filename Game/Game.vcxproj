@@ -140,8 +140,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="frag.glsl" />
+    <None Include="frag_light.glsl" />
     <None Include="geom.glsl" />
     <None Include="vert.glsl" />
+    <None Include="vert_light.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="file.txt" />

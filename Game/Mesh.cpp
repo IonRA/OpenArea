@@ -2,11 +2,13 @@
 #include <vector>
 #include "Mesh.h"
 #include <iostream>
-Vertex::Vertex(glm::vec3 pos, glm::vec4 col, glm::vec2 tex)
+using std::cout;
+Vertex::Vertex(glm::vec3 pos, glm::vec4 col, glm::vec2 tex, glm::vec3 normal)
 {
 	this->pos = pos;
 	this->col = col;
 	this->tex = tex;
+	this->normal = normal;
 }
 
 Mesh::Mesh(const Vertex *v, unsigned int nbVer, const unsigned int *ind, unsigned int nbInd)
@@ -24,11 +26,14 @@ Mesh::Mesh(const Vertex *v, unsigned int nbVer, const unsigned int *ind, unsigne
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(v[0]), (void*)24);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(v[0]), (void*)36);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(v[0]), (void*)48);
 	glEnableVertexAttribArray(2);
 
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(v[0]), (void*)8);
 	glEnableVertexAttribArray(1);
+	
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(v[0]), (void*)36);
+	glEnableVertexAttribArray(3);
 
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);

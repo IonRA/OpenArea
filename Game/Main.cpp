@@ -103,38 +103,39 @@ int main(int argc, char ** argv)
 		glEnable(GL_DEPTH_TEST);
 
 		Shader s("vert.glsl", "frag.glsl");
+		Shader sLight("vert_light.glsl", "frag_light.glsl");
 
 		Vertex v[] = {
 
-			Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f)),
-			Vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f)),
-			Vertex(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)),
-			Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0)),
+			Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f,  0.0f, -1.0f)),
+			Vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f)),
+			Vertex(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f)),
+			Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0), glm::vec3(0.0f,  0.0f, -1.0f)),
 
-			Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f)),
-			Vertex(glm::vec3(0.5f, -0.5f,  0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f)),
-			Vertex(glm::vec3(0.5f,  0.5f, 0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)),
-			Vertex(glm::vec3(-0.5f,  0.5f, 0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0)),
+			Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f,  0.0f,  1.0f)),
+			Vertex(glm::vec3(0.5f, -0.5f,  0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f,  0.0f,  1.0f)),
+			Vertex(glm::vec3(0.5f,  0.5f, 0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f,  0.0f,  1.0f)),
+			Vertex(glm::vec3(-0.5f,  0.5f, 0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0), glm::vec3(0.0f,  0.0f,  1.0f)),
 
-			Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f)),
-			Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f)),
-			Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)),
-			Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0)),
+			Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f), glm::vec3(-1.0f,  0.0f,  0.0f)),
+			Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f), glm::vec3(-1.0f,  0.0f,  0.0f)),
+			Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 0.0f), glm::vec3(-1.0f,  0.0f,  0.0f)),
+			Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0), glm::vec3(-1.0f,  0.0f,  0.0f)),
 
-			Vertex(glm::vec3(0.5f,  0.5f,  0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f)),
-			Vertex(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f)),
-			Vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)),
-			Vertex(glm::vec3(0.5f, -0.5f,  0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0)),
+			Vertex(glm::vec3(0.5f,  0.5f,  0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f), glm::vec3(1.0f,  0.0f,  0.0f)),
+			Vertex(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f), glm::vec3(1.0f,  0.0f,  0.0f)),
+			Vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 0.0f), glm::vec3(1.0f,  0.0f,  0.0f)),
+			Vertex(glm::vec3(0.5f, -0.5f,  0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0), glm::vec3(1.0f,  0.0f,  0.0f)),
 
-			Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f)),
-			Vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f)),
-			Vertex(glm::vec3(0.5f, -0.5f,  0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)),
-			Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0)),
+			Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
+			Vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
+			Vertex(glm::vec3(0.5f, -0.5f,  0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
+			Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0), glm::vec3(0.0f, -1.0f,  0.0f)),
 
-			Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f)),
-			Vertex(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f)),
-			Vertex(glm::vec3(0.5f,  0.5f,  0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)),
-			Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0))
+			Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f,  1.0f,  0.0f)),
+			Vertex(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f), glm::vec3(0.0f,  1.0f,  0.0f)),
+			Vertex(glm::vec3(0.5f,  0.5f,  0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 0.0f), glm::vec3(0.0f,  1.0f,  0.0f)),
+			Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0), glm::vec3(0.0f,  1.0f,  0.0f))
 
 		};
 		SDL_ShowCursor(SDL_DISABLE);
@@ -148,26 +149,35 @@ int main(int argc, char ** argv)
 		float mX, mY;
 		float c = -PI / 2;
 
-		s.useProgram();
 
-		std::vector<glm::vec3> posistions;
+		std::vector<glm::vec3> positions;
+		std::vector<glm::vec3> lightPositions;
 		while (!d.isClosed())
 		{
 			d.clear();
-		/*	for (i = 0; i < 4; ++i)
+
+			for (auto a : positions)
 			{
-				tr.getRotate().x = c + i;
-				tr.getTranslate().z = -i * i;
-				tr.getTranslate().x = i;
+				s.useProgram();
+				if (lightPositions.size() != 0)
+				{
+					s.setLightColor(glm::vec3(1.0f));
+					s.setLightPos(lightPositions[0]);
+					s.setViewPos(cam.getPos());
+				}
+				tr.getTranslate() = a;
+				tr.getScale() = glm::vec3(1.0);
 				s.actualize(tr, cam);
 				m.bind();
 				m.draw();
-			}*/
+			}
 
-			for (auto a : posistions)
+			for (auto a : lightPositions)
 			{
+				sLight.useProgram();
 				tr.getTranslate() = a;
-				s.actualize(tr, cam);
+				tr.getScale() = glm::vec3(0.25);
+				sLight.actualize(tr, cam);
 				m.bind();
 				m.draw();
 			}
@@ -188,7 +198,7 @@ int main(int argc, char ** argv)
 						{
 						case SDLK_w:
 							cam.moveForward();
-							for (auto a : posistions)
+							for (auto a : positions)
 								if (cam.getPos() <= a + 0.5 && cam.getPos() >= a - 0.5)
 								{
 									cam.moveBack();
@@ -197,7 +207,7 @@ int main(int argc, char ** argv)
 							break;
 						case SDLK_s:
 							cam.moveBack();
-							for (auto a : posistions)
+							for (auto a : positions)
 								if (cam.getPos() <= a + 0.5 && cam.getPos() >= a - 0.5)
 								{
 									cam.moveForward();
@@ -206,7 +216,7 @@ int main(int argc, char ** argv)
 							break;
 						case SDLK_a:
 							cam.moveLeft();
-							for (auto a : posistions)
+							for (auto a : positions)
 								if (cam.getPos() <= a + 0.5 && cam.getPos() >= a - 0.5)
 								{
 									cam.moveRight();
@@ -215,7 +225,7 @@ int main(int argc, char ** argv)
 							break;
 						case SDLK_d:
 							cam.moveRight();
-							for (auto a : posistions)
+							for (auto a : positions)
 								if (cam.getPos() <= a + 0.5 && cam.getPos() >= a - 0.5)
 								{
 									cam.moveLeft();
@@ -252,7 +262,9 @@ int main(int argc, char ** argv)
 						break;
 				case SDL_MOUSEBUTTONDOWN:
 					if (e.button.button == SDL_BUTTON_LEFT)
-						posistions.push_back(cam.getPos() + cam.getForward() + cam.getForward());
+						positions.push_back(cam.getPos() + cam.getForward() + cam.getForward());
+					else if (e.button.button == SDL_BUTTON_RIGHT)
+						lightPositions.push_back(cam.getPos() + cam.getForward() + cam.getForward());
 					break;
 				case SDL_WINDOWEVENT:
 						if (e.window.event == SDL_WINDOWEVENT_RESIZED)

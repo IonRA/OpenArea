@@ -67,6 +67,12 @@
     <None Include="vert.glsl">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="frag_light.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="vert_light.glsl">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="file.txt">

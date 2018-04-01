@@ -52,7 +52,7 @@ public:
 
 	void moveForward()
 	{
-		this->pos += 0.05f * forward;
+		this->pos += 0.2f * forward;
 	}
 
 	void moveBack()

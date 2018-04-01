@@ -7,8 +7,10 @@ class Vertex
 public:
 	glm::vec4 col;
 	glm::vec3 pos;
+	glm::vec3 normal;
 	glm::vec2 tex;
-	Vertex(glm::vec3 pos = glm::vec3(0, 0, 0), glm::vec4 col = glm::vec4(1, 1, 1, 1), glm::vec2 tex = glm::vec2(0, 0));
+	
+	Vertex(glm::vec3 pos = glm::vec3(0, 0, 0), glm::vec4 col = glm::vec4(1, 1, 1, 1), glm::vec2 tex = glm::vec2(0, 0), glm::vec3 normal = glm::vec3(0, 0, 0));
 	virtual ~Vertex() {}
 };
 

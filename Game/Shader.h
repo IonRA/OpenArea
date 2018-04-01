@@ -16,4 +16,7 @@ public:
 	virtual ~Shader();
 	void useProgram() { glUseProgram(shaderProgram); }
 	void actualize(const Transformation &, const Camera&);
+	void setLightPos(glm::vec3);
+	void setLightColor(glm::vec3);
+	void setViewPos(glm::vec3);
 };
