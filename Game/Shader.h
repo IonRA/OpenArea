@@ -16,7 +16,13 @@ public:
 	virtual ~Shader();
 	void useProgram() { glUseProgram(shaderProgram); }
 	void actualize(const Transformation &, const Camera&);
-	void setLightPos(glm::vec3);
-	void setLightColor(glm::vec3);
+	void setLight(glm::vec3, glm::vec3, glm::vec3, glm::vec3);
 	void setViewPos(glm::vec3);
+	void setMaterial(float);
+	void setT1(){
+		glUniform1i(uniforms[9], 0);
+	}
+	void setT2(){
+		glUniform1i(uniforms[10], 1);
+	}
 };

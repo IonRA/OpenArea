@@ -141,7 +141,10 @@ int main(int argc, char ** argv)
 		SDL_ShowCursor(SDL_DISABLE);
 
 		Mesh m(v, 24, indices, 36);
-		Texture t("Resources/container.jpg");
+
+		Texture t("Resources/container2.jpg");
+		Texture t2("Resources/container4.jpg");
+		
 		Transformation tr;
 		Camera cam(glm::vec3(0, 0, 3), 70.0f, (float)SCREEN_W / SCREEN_H, 0.01f, 1000.0f);
 
@@ -152,22 +155,33 @@ int main(int argc, char ** argv)
 
 		std::vector<glm::vec3> positions;
 		std::vector<glm::vec3> lightPositions;
+
+		s.useProgram();
+		s.setT1();
+		s.setT2();
+		glActiveTexture(GL_TEXTURE0);
+		t.bind();
+		glActiveTexture(GL_TEXTURE1);
+		t2.bind();
+
 		while (!d.isClosed())
 		{
 			d.clear();
-
 			for (auto a : positions)
 			{
 				s.useProgram();
+			
+
 				if (lightPositions.size() != 0)
 				{
-					s.setLightColor(glm::vec3(1.0f));
-					s.setLightPos(lightPositions[0]);
+					s.setMaterial(64.0f);
+					s.setLight(glm::vec3(0.2f, 0.2f, 0.2f), lightPositions[0], glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 1.0f, 1.0f));
 					s.setViewPos(cam.getPos());
 				}
 				tr.getTranslate() = a;
 				tr.getScale() = glm::vec3(1.0);
 				s.actualize(tr, cam);
+
 				m.bind();
 				m.draw();
 			}

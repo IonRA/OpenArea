@@ -55,11 +55,17 @@ Shader::Shader(const char * vh, const char * fh)
 	}
 	uniforms.push_back(glGetUniformLocation(shaderProgram, "transform"));
 	uniforms.push_back(glGetUniformLocation(shaderProgram, "cameraView"));
-	uniforms.push_back(glGetUniformLocation(shaderProgram, "lightColor"));
-	uniforms.push_back(glGetUniformLocation(shaderProgram, "lightPos"));
+	uniforms.push_back(glGetUniformLocation(shaderProgram, "light.amb"));
+	uniforms.push_back(glGetUniformLocation(shaderProgram, "light.pos"));
 	uniforms.push_back(glGetUniformLocation(shaderProgram, "normalMatrix"));
 	uniforms.push_back(glGetUniformLocation(shaderProgram, "viewPos"));
+	uniforms.push_back(glGetUniformLocation(shaderProgram, "material.shin"));
+	uniforms.push_back(glGetUniformLocation(shaderProgram, "light.diff"));
+	uniforms.push_back(glGetUniformLocation(shaderProgram, "light.spec"));
+	uniforms.push_back(glGetUniformLocation(shaderProgram, "material.diff"));
+	uniforms.push_back(glGetUniformLocation(shaderProgram, "material.spec"));
 }
+
 
 std::string Shader::ReadFile(const char* file)
 {
@@ -78,20 +84,24 @@ void Shader::actualize(const Transformation &t, const Camera &c)
 	glUniformMatrix3fv(uniforms[4], 1, GL_FALSE, glm::value_ptr(normalMatrix));
 }
 
-void Shader::setLightColor(glm::vec3 c)
+void Shader::setLight(glm::vec3 a, glm::vec3 p, glm::vec3 d, glm::vec3 s)
 {
-	glUniform3fv(uniforms[2], 1, &c[0]);
-}
-
-void Shader::setLightPos(glm::vec3 p)
-{
+	glUniform3fv(uniforms[2], 1, &a[0]);
 	glUniform3fv(uniforms[3], 1, &p[0]);
+	glUniform3fv(uniforms[7], 1, &d[0]);
+	glUniform3fv(uniforms[8], 1, &s[0]);
 }
 
 void Shader::setViewPos(glm::vec3 p)
 {
 	glUniform3fv(uniforms[5], 1, &p[0]);
 }
+
+void Shader::setMaterial(float shin)
+{
+	glUniform1f(uniforms[6], shin);
+}
+
 
 Shader::~Shader()
 {
